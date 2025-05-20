@@ -1,0 +1,71 @@
+#car game
+import pygame as pg
+import time
+import random
+
+#containing everything inside game function allows for
+#  easy replays by calling 'game()'
+def game():
+    
+#constants and variables
+    screen = (500, 750)
+    font_size = 50
+    colour = {
+    'l-blue': (47, 133, 180),
+    'd-blue' : (23, 66, 90),
+    'red': (200, 10, 10),
+    'black': (0, 0, 0),
+    'white': (240, 240, 240),
+    'l-grey' : (180, 180, 180),
+    'd-grey' : (100, 100, 100)
+    }
+    end = False
+    
+#message function
+    def msg(txt,txt_colour,bkgd_colour,msg_x,msg_y,f_size):
+        font = pg.font.SysFont("SFPro",f_size)
+        txt = font.render(txt,True,txt_colour,bkgd_colour)
+        txt_box = txt.get_rect(center = (msg_x,msg_y))
+        screen.blit(txt,txt_box)
+        
+#start screen
+    def start():
+        screen.fill(colour['d-blue'])
+        msg('Car Game!',colour['red'],colour['d-blue'],250,100,70)
+        pg.display.update()
+        start = False
+        while not start:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                elif event.type == pg.KEYDOWN:
+                    start = True
+    def frame(player_x,player_y):
+        pg.draw.rect(screen,colour['l-blue'],[player_x,player_y,100,160])
+        
+
+#initailising pygame
+    pg.init()
+    font = pg.font.SysFont("SFPro",font_size)
+    screen = pg.display.set_mode((screen))
+    pg.display.set_caption("Car game")
+    game_icon = pg.image.load('game_icon.png')
+    pg.display.set_icon(game_icon)
+    clock = pg.time.Clock()
+    
+#start screen
+    start()
+
+#main game loop
+    while not end:
+        screen.fill(colour['d-blue'])
+        frame(12,550)
+        pg.display.update()
+        time.sleep(3)
+        end = True
+    
+        
+  
+        
+    pg.quit()
+game()
